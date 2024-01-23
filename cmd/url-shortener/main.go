@@ -1,6 +1,8 @@
 package main
 
 import (
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"log/slog"
 	"os"
 	"url_shortener/internal/config"
@@ -27,7 +29,12 @@ func main() {
 		log.Error("failed to init storage", sl.Err(err))
 		os.Exit(1)
 	}
+
 	_ = storage
+
+	router := chi.NewRouter()
+
+	router.Use(middleware.RequestID)
 
 	// TODO: init storage: sqlite
 
